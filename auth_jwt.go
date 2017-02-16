@@ -134,6 +134,7 @@ func (mw *GinJWTMiddleware) MiddlewareFunc() gin.HandlerFunc {
 
 func (mw *GinJWTMiddleware) middlewareImpl(c *gin.Context) {
 	if strings.Contains(c.Request.Header.Get("User-Agent"), "Go-http-client") {
+		c.Set("userID", "system")
 		c.Next()
 		return
 	}
