@@ -133,6 +133,11 @@ func (mw *GinJWTMiddleware) MiddlewareFunc() gin.HandlerFunc {
 }
 
 func (mw *GinJWTMiddleware) middlewareImpl(c *gin.Context) {
+	if strings.Contains(c.Request.Header.Get("User-Agent"), "Go-http-client") {
+		c.Next()
+		return
+	}
+
 	token, err := mw.parseToken(c)
 
 	if err != nil {
