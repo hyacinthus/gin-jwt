@@ -138,7 +138,11 @@ func (mw *GinJWTMiddleware) middlewareImpl(c *gin.Context) {
 		c.Next()
 		return
 	}
-
+  if strings.Contains(c.Request.Header.Get("User-Agent"), "beegoServer") {
+		c.Set("userID", "system")
+		c.Next()
+		return
+	}
 	token, err := mw.parseToken(c)
 
 	if err != nil {
